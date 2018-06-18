@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "opencv2/opencv.hpp"
+//#include "opencv2/opencv.hpp"
 #include <QFileDialog>
 #include "procesadoficheros.h"
 
@@ -19,7 +19,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+/*
 void MainWindow::on_CameraBtn_clicked()
 {
     QMessageBox msgBox;
@@ -46,6 +46,12 @@ void MainWindow::on_CameraBtn_clicked()
     //return 0;
     msgBox.setText("Thats all falks..");
 }
+*/
+
+void MainWindow::on_CameraBtn_clicked()
+{
+
+}
 
 void MainWindow::on_FileButton_clicked()
 {
@@ -53,7 +59,12 @@ void MainWindow::on_FileButton_clicked()
             tr("Open Video"), "/home/ercmos/Proyectos/Audiencias/Ficheros_Audiencias/", tr("Audience Files (*.txt)"));
         ui->OpenFileBrowser->setText(fileName);
 
-        ///home/ercmos/Proyectos/Audiencias/Ficheros_Audiencias/Test.txt
+    QFileInfo fi(fileName);
+    QString name = fi.fileName();
+    QString pathfile = fi.absolutePath();
+
+
+        //home/ercmos/Proyectos/Audiencias/Ficheros_Audiencias/Test.txt
 
 //    QString dirName = QFileDialog::getExistingDirectory(this,
 //           tr("DoF Test Files (*.txt)"),"/home/ercmos",
@@ -61,7 +72,9 @@ void MainWindow::on_FileButton_clicked()
 //                       | QFileDialog::DontResolveSymlinks);
 
         ProcesadoFicheros fichero;
-        fichero.LeeFichero(fileName.toStdString(),"/home/ercmos/Proyectos/Audiencias/Ficheros_Audiencias/");
+//        fichero.LeeFichero(fileName.toStdString(),"/home/ercmos/Proyectos/Audiencias/Ficheros_Audiencias/");
+
+        fichero.LeeFichero(name.toStdString(),pathfile.toStdString());
 
 
         //Graphic_File procesa;
@@ -69,4 +82,3 @@ void MainWindow::on_FileButton_clicked()
         //procesa.Lee_Fichero(fileName);
 
 }
-

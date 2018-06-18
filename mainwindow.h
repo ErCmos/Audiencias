@@ -4,9 +4,9 @@
 #include <QMainWindow>
 
 #include <QMessageBox>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <opencv/cxcore.h>
+//#include <opencv/cv.h>
+//#include <opencv/highgui.h>
+//#include <opencv/cxcore.h>
 
 namespace Ui {
 class MainWindow;

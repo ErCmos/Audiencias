@@ -14,6 +14,10 @@ public:
 
     //////////////// CrearDiccionario ///////////////////
     void LeeFichero(std::string fileName, std::string dirName);
+    void process_line(QString line);
+    char * ToFloatString(const std::string& myString);
+    bool is_number(const std::string& s);
+    int to_sec(const std::string& tc);
     ////////////////////////////////////////////////
 };
 
