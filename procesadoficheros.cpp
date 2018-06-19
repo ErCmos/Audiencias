@@ -105,6 +105,8 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
 
         vector<vector<string> > MatrizTMP;
 
+        cout << "Iniciando Matriz Temporal" << endl;
+
         int rows=0;
         int cols=0;
         rewind(fp);
@@ -162,9 +164,9 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             free(line);
 
 
-/*Busca en la matriz los elementos repetidos para cada tipo de clase
+/*Agrupa en la matriz de audiencias los elementos similares
 * (Segmentos de 30 minutos y diferencia semana laboral de fin de semana) total 96 clases*/
-        //vector<vector<vector<vector<vector<string>>>>>MatrizAudiencias;
+
         vector<vector<vector<vector<string>>>>MatrizAudiencias;
         MatrizAudiencias.push_back(vector<vector<vector<string>>>());   //Dias de diario
         MatrizAudiencias.push_back(vector<vector<vector<string>>>());   //Fin de semana
@@ -174,16 +176,16 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             MatrizAudiencias[1].push_back(vector<vector<string>>());   //48 fragmentos de 30 minutos
         }
         int i=0, j=0;
+        cout << "Iniciando Formateo de Datos" << endl;
         for (i = 0; i < rows; i++)
         {
+            cout << "Procesando línea: " << i << " de " << rows << " líneas" << endl;
             if (SemanaLaboral.contains(MatrizTMP[i][4].c_str())) //4 Día de la semana
             {
                 int tramo=round(((float)(to_sec(MatrizTMP[i][6].c_str()))/(float)1800)-1);
                 MatrizAudiencias[0][tramo].push_back(vector<string>());    //Genera la nueva fila para ese horario
                 for (j = 0; j < MatrizTMP[i].size(); j++)
-                {
                     MatrizAudiencias[0][tramo][MatrizAudiencias[0][tramo].size()-1].push_back(MatrizTMP[i][j]);
-                }
             }
             else if (FindeSemana.contains(MatrizTMP[i][4].c_str()))
             {
@@ -191,16 +193,9 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
                 MatrizAudiencias[1][tramo].push_back(vector<string>());    //Genera la nueva fila para ese horario
                 for (j = 0; j < MatrizTMP[i].size(); j++)
                     MatrizAudiencias[1][tramo][MatrizAudiencias[1][tramo].size()-1].push_back(MatrizTMP[i][j]);
-                /*
-                //MatrizAudiencias[1].push_back(vector<vector<vector<string> > >());
-                const char * c = MatrizTMP[i][0].c_str();
-                printf("%s\t", MatrizTMP[i][0].c_str());
-                */
             }
         }
 /*///////////////////////////////////////////*/
-
-
 
 
         //featuresUnclustered.push_back(MatDescriptor_TMP_SVM.reshape(1,1));   // One line per action.
