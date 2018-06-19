@@ -8,8 +8,8 @@
 using namespace std;
 using namespace cv;
 
-QStringList SemanaLaboral={"Lunes" , "Martes" , "Miércoles" , "Jueves" , "Viernes"};
-QStringList FindeSemana={"Sábado" , "Domingo"};
+QStringList SemanaLaboral={"Lunes" , "Martes" , "Mi�rcoles" , "Jueves" , "Viernes"};
+QStringList FindeSemana={"S�bado" , "Domingo"};
 
 ProcesadoFicheros::ProcesadoFicheros()
 {
@@ -176,43 +176,26 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
         int i=0, j=0;
         for (i = 0; i < rows; i++)
         {
-            int fila=0;
             if (SemanaLaboral.contains(MatrizTMP[i][4].c_str())) //4 Día de la semana
             {
-                int ii=to_sec(MatrizTMP[i][6].c_str()); //6 hora Fin
-                int jj=to_sec(MatrizTMP[i][5].c_str()); //5 hora Inicio
-                int kk=jj-ii;
-                int ll=abs(kk);
-                float mm=(float)ll / (float)1800;
-                int nn=round(mm);
-                double duracion = round((float)abs((to_sec(MatrizTMP[i][6].c_str()))-(to_sec(MatrizTMP[i][5].c_str())))/(float)1800);
                 int tramo=round(((float)(to_sec(MatrizTMP[i][6].c_str()))/(float)1800)-1);
                 MatrizAudiencias[0][tramo].push_back(vector<string>());    //Genera la nueva fila para ese horario
                 for (j = 0; j < MatrizTMP[i].size(); j++)
                 {
-                    //MatrizAudiencias[0][tramo][fila].push_back(MatrizTMP[i][j]);
                     MatrizAudiencias[0][tramo][MatrizAudiencias[0][tramo].size()-1].push_back(MatrizTMP[i][j]);
-                    ++fila;
-                    /*
-                    //if (round(((to_sec(MatrizTMP[i][6].c_str()))-(to_sec(MatrizTMP[i][5].c_str())))/1800))    //5 Hora Inicio //6 Hora Fin
-                    if (duracion<=1)
-                    {
-                        //MatrizAudiencias[0][tramo][j].push_back(vector<vector<string>>);
-                    }
-                    else
-                    {
-
-                    }
-                    const char * c = MatrizTMP[i][0].c_str();
-                    printf("%s\t", MatrizTMP[i][0].c_str());
-                    */
                 }
             }
             else if (FindeSemana.contains(MatrizTMP[i][4].c_str()))
             {
+                int tramo=round(((float)(to_sec(MatrizTMP[i][6].c_str()))/(float)1800)-1);
+                MatrizAudiencias[1][tramo].push_back(vector<string>());    //Genera la nueva fila para ese horario
+                for (j = 0; j < MatrizTMP[i].size(); j++)
+                    MatrizAudiencias[1][tramo][MatrizAudiencias[1][tramo].size()-1].push_back(MatrizTMP[i][j]);
+                /*
                 //MatrizAudiencias[1].push_back(vector<vector<vector<string> > >());
                 const char * c = MatrizTMP[i][0].c_str();
                 printf("%s\t", MatrizTMP[i][0].c_str());
+                */
             }
         }
 /*///////////////////////////////////////////*/
