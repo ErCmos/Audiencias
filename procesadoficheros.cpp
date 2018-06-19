@@ -165,17 +165,18 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
 /*Busca en la matriz los elementos repetidos para cada tipo de clase
 * (Segmentos de 30 minutos y diferencia semana laboral de fin de semana) total 96 clases*/
         //vector<vector<vector<vector<vector<string>>>>>MatrizAudiencias;
-        vector<vector<vector<vector<vector<string>>>>>MatrizAudiencias;
-        MatrizAudiencias.push_back(vector<vector<vector<vector<string>>>>());   //Dias de diario
-        MatrizAudiencias.push_back(vector<vector<vector<vector<string>>>>());   //Fin de semana
+        vector<vector<vector<vector<string>>>>MatrizAudiencias;
+        MatrizAudiencias.push_back(vector<vector<vector<string>>>());   //Dias de diario
+        MatrizAudiencias.push_back(vector<vector<vector<string>>>());   //Fin de semana
         for (int x=0;x<48;x++)
         {
-            MatrizAudiencias[0].push_back(vector<vector<vector<string>>>());   //48 fragmentos de 30 minutos
-            MatrizAudiencias[1].push_back(vector<vector<vector<string>>>());   //48 fragmentos de 30 minutos
+            MatrizAudiencias[0].push_back(vector<vector<string>>());   //48 fragmentos de 30 minutos
+            MatrizAudiencias[1].push_back(vector<vector<string>>());   //48 fragmentos de 30 minutos
         }
         int i=0, j=0;
         for (i = 0; i < rows; i++)
         {
+            int fila=0;
             if (SemanaLaboral.contains(MatrizTMP[i][4].c_str())) //4 Día de la semana
             {
                 int ii=to_sec(MatrizTMP[i][6].c_str()); //6 hora Fin
@@ -185,16 +186,18 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
                 float mm=(float)ll / (float)1800;
                 int nn=round(mm);
                 double duracion = round((float)abs((to_sec(MatrizTMP[i][6].c_str()))-(to_sec(MatrizTMP[i][5].c_str())))/(float)1800);
-                int tramo=round((float)(to_sec(MatrizTMP[i][6].c_str()))/(float)1800);
-                MatrizAudiencias[0][tramo].push_back(vector<vector<string> >());    //Genera la nueva fila para ese horario
+                int tramo=round(((float)(to_sec(MatrizTMP[i][6].c_str()))/(float)1800)-1);
+                MatrizAudiencias[0][tramo].push_back(vector<string>());    //Genera la nueva fila para ese horario
                 for (j = 0; j < MatrizTMP[i].size(); j++)
                 {
-                    MatrizAudiencias[0][tramo][j].push_back(" ");
+                    //MatrizAudiencias[0][tramo][fila].push_back(MatrizTMP[i][j]);
+                    MatrizAudiencias[0][tramo][MatrizAudiencias[0][tramo].size()-1].push_back(MatrizTMP[i][j]);
+                    ++fila;
                     /*
                     //if (round(((to_sec(MatrizTMP[i][6].c_str()))-(to_sec(MatrizTMP[i][5].c_str())))/1800))    //5 Hora Inicio //6 Hora Fin
                     if (duracion<=1)
                     {
-                        //MatrizAudiencias[0][tramo-1][j].push_back(vector<vector<string>>);
+                        //MatrizAudiencias[0][tramo][j].push_back(vector<vector<string>>);
                     }
                     else
                     {
@@ -207,7 +210,7 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             }
             else if (FindeSemana.contains(MatrizTMP[i][4].c_str()))
             {
-                MatrizAudiencias[1].push_back(vector<vector<vector<string> > >());
+                //MatrizAudiencias[1].push_back(vector<vector<vector<string> > >());
                 const char * c = MatrizTMP[i][0].c_str();
                 printf("%s\t", MatrizTMP[i][0].c_str());
             }
