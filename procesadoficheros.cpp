@@ -118,7 +118,7 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
         } while ((!linea.contains("Total										",Qt::CaseSensitive)) && ((read = getline(&line, &len, fp)) != -1));
 //        } while ((!linea.contains("Total\t\t\t\t\t\t\t\t\t\t",Qt::CaseSensitive)) && ((read = getline(&line, &len, fp)) != -1));
 
-        while ((read = getline(&line, &len, fp)) != -1)
+        while (((read = getline(&line, &len, fp)) != -1) && ((std::string) line != "\r\n"))
         {
             linea=line;
             //Extract parts separated by "\t"
@@ -158,6 +158,7 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             ++rows;
             cols=0;
         }
+
 
         fclose(fp);
         if (line)
