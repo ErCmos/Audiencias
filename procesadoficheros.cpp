@@ -157,6 +157,7 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
 
             ++rows;
             cols=0;
+            cout << "Iniciando Matriz Temporal fila " << rows << endl;
         }
 
 
