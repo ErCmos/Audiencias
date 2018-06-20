@@ -31,7 +31,7 @@ char * ProcesadoFicheros::ToFloatString(const std::string& myString) {
 
     std::string::const_iterator it = myString.begin();
 
-    for (int i=0; i<myString.size();++i)
+    for (unsigned int i=0; i<myString.size();++i)
     {
         if(it[i]==',')
         {
@@ -52,7 +52,7 @@ char * ProcesadoFicheros::ToFloatString(const std::string& myString) {
 
 bool ProcesadoFicheros::is_number(const std::string& s)
 {
-    int numero=0;
+    unsigned int numero=0;
     std::string::const_iterator it = s.begin();
     while (it != s.end())
     {
@@ -177,7 +177,8 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             MatrizAudiencias[0].push_back(vector<vector<string>>());   //48 fragmentos de 30 minutos
             MatrizAudiencias[1].push_back(vector<vector<string>>());   //48 fragmentos de 30 minutos
         }
-        int i=0, j=0;
+        signed int i=0;
+        unsigned int j=0;
         cout << "Iniciando Formateo de Datos" << endl;
         for (i = 0; i < rows; i++)
         {
@@ -199,6 +200,8 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
         }
 /*///////////////////////////////////////////*/
 
+        MatrizTMP.clear();
+        MatrizTMP.shrink_to_fit();
 
         //featuresUnclustered.push_back(MatDescriptor_TMP_SVM.reshape(1,1));   // One line per action.
         featuresUnclustered.push_back(MatDescriptor_TMP_SVM);
@@ -213,13 +216,5 @@ void ProcesadoFicheros::LeeFichero(std::string fileName, std::string dirName)
             FileStorage fs(fullName.substr(0,fullName.find_first_of(".")) + ".yml", FileStorage::WRITE);
             fs << "Action" << descriptor;
             fs.release();
-    }
-}
-
-void ProcesadoFicheros::process_line(QString line)
-{
-    if (line=="Fechas")
-    {
-        QString Fechas=line;
     }
 }
